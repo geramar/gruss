@@ -10,6 +10,7 @@ class Formula:
 fileName = str(input('Название файла: ')) + '.txt'
 fileData = open(fileName, 'r', encoding = 'utf8').read()
 print(fileData)
+
 print(Formula(fileData))
 #formula = Formula(parser)
 
