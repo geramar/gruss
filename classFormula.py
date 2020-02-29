@@ -8,6 +8,7 @@ class Formula:
         return str(self.data)
 
 fileName = str(input('Название файла: ')) + '.txt'
+print("Meow")
 fileData = open(fileName, 'r', encoding = 'utf8').read()
 print(fileData)
 
