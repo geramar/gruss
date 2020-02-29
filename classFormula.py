@@ -11,7 +11,6 @@ fileName = str(input('Название файла: ')) + '.txt'
 print("Meow")
 fileData = open(fileName, 'r', encoding = 'utf8').read()
 print(fileData)
-
 print(Formula(fileData))
 #formula = Formula(parser)
 
