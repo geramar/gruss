@@ -15,7 +15,7 @@ class Parser:
 
         self.formul = list(
             map(
-                lambda x: x.type, self.text
+                lambda x: x.getType(), self.text
             )
         )
         for word in self.text:
@@ -34,4 +34,3 @@ class Parser:
         return self.matrix
     def __repr__(self):
         return str(self.matrix)
-
