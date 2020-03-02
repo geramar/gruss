@@ -44,5 +44,5 @@ class Type:
     def __repr__(self):
         return str(self.type)
 
-w = Word('Meow!', root='M')
+w = Word('Meow...', root='M')
 r = w.getRoot()
