@@ -85,6 +85,7 @@ class Dict:
                 self.roots.add(root)
         return self.roots
 
+
     def get_words(self, root):
         self.words = set()
         if root in self.root_to_set:
