@@ -1,4 +1,5 @@
-from classFormula import Formula
+from classParser import Parser
+from dict import Dict
 
 parser = Parser(Dict())
 for i in range(1, 5):

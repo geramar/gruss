@@ -1,4 +1,3 @@
-from dict import Dict
 
 
 class Word:
@@ -15,8 +14,8 @@ class Word:
     def getNorma(self):
         norma = self.word
         if self.word in self.dicts.analogs:
-            norma = self.dicts.getAnalogs(self.word)
-        return Word(norma)
+            norma = self.dicts.getNorma(self.word)
+        return Word(norma, self.dicts)
 
     def getRootSynonyms(self):
         allSynonyms = self.getRoot().getWords()
@@ -80,5 +79,5 @@ class Type:
             return self.type == other
         elif isinstance(other, self.__class__):
             return self.type == other.type
-        else
+        else:
             return NotImplemented
