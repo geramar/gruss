@@ -16,13 +16,14 @@ class Word:
         norma = self.word
         if self.word in self.dicts.analogs:
             norma = self.dicts.analogs[self.word]
-        return norma
+        return Word(norma)
 
     def getRootSynonyms(self):
-        synonyms = self.getRoot().getWords()
-        for syn in synonyms:
-            if syn == self.getNorma():
-                synonyms.remove(syn)
+        allSynonyms = self.getRoot().getWords()
+        synonyms = set()
+        for el in allSynonyms:
+            if str(el) != str(self.getNorma()):
+                synonyms.add(el)
         return synonyms
 
     def getFunctionalSynonyms(self):
@@ -46,8 +47,11 @@ class Root:
         return set(map(lambda w: Word(w, self.dicts), self.dicts.get_words(self.root)))
 
     def getTypeSynonyms(self):
-        synonyms = self.getType().getRoots()
-        synonyms.remove(self.root)
+        allSynonyms = self.getType().getRoots()
+        synonyms = set()
+        for el in allSynonyms:
+            if str(el) != str(self):
+                synonyms.add(el)
         return synonyms
 
     def __repr__(self):
@@ -103,3 +107,5 @@ print('14. ', l.getRoot())
 print('15. ', l.getType())
 print('16. ', a.getRootSynonyms())
 print('17. ', a.getNorma())
+print('18. ', b.getTypeSynonyms())
+print('19. ', a.getFunctionalSynonyms())
