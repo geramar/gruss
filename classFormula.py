@@ -1,16 +1,11 @@
 from classParser import Parser
 
 class Formula:
-    def __init__(self, data = ):
-        parser = Parser()
-        self.data = parser.parse(data)
+    def __init__(self, data, parser=Parser()):
+        self.parser = parser
+        self.data = self.parser.parse(data)
+    def getFormula(self):
+        formula = list(map(lambda x: x.getType(), self.data))
+        return '-'.join(map(str, formula))
     def __repr__(self):
         return str(self.data)
-
-fileName = str(input('Название файла: ')) + '.txt'
-print("Meow")
-fileData = open(fileName, 'r', encoding = 'utf8').read()
-print(fileData)
-print(Formula(fileData))
-#formula = Formula(parser)
-
