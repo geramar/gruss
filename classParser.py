@@ -1,28 +1,27 @@
 from classesWordRootType import Word, Type
+from classFormula import Formula
 import re
 
 
 class Parser:
-    def __init__(self):
-        self.elements = []
+    def __init__(self, dict):
+        self.dict = dict
     def parse(self, data):
-        self.elements = list(
+        elements = list(
             map(
-                lambda x: Word(x),
+                lambda x: Word(x, self.dict),
                 re.sub('[^a-zA-Zäüöß\s]', '', data).lower().split()
             )
         )
 
-        for element in self.elements:
+        for element in elements:
             if str(element.getType()) == 'H':
-                i = self.elements.index(element)
-                if str(self.elements[i + 1].getType()) == 'S' or str(self.elements[i + 1].getType()) == 'R':
-                    self.elements[i + 1] = Word(str(self.elements[i]) + ' ' + str(self.elements[i + 1]))
-                    self.elements.pop(i)
+                i = elements.index(element)
+                if str(elements[i + 1].getType()) == 'S' or str(elements[i + 1].getType()) == 'R':
+                    elements[i + 1] = Word(str(elements[i]) + ' ' + str(elements[i + 1]), self.dict)
+                    elements.pop(i)
             if str(element.getType()) == 'und':
-                i = self.elements.index(element)
-                self.elements.pop(i)
-        return self.elements
+                i = elements.index(element)
+                elements.pop(i)
 
-    def __repr__(self):
-        return str(self.elements)
+        return Formula(elements)

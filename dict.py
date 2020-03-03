@@ -101,6 +101,3 @@ class Dict:
             if self.word_to_root[word] == root:
                 words.add(word)
         return words
-
-dicts = Dict()
-

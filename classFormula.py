@@ -1,11 +1,9 @@
-from classParser import Parser
 
 class Formula:
-    def __init__(self, data, parser=Parser()):
-        self.parser = parser
-        self.data = self.parser.parse(data)
-    def getFormula(self):
-        formula = list(map(lambda x: x.getType(), self.data))
+    def __init__(self, words):
+        self.words = words
+    def getSchema(self):
+        formula = list(map(lambda x: x.getType(), self.words))
         return '-'.join(map(str, formula))
     def __repr__(self):
-        return str(self.data)
+        return str(self.words)

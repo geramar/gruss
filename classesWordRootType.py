@@ -2,12 +2,12 @@ from dict import Dict
 
 
 class Word:
-    def __init__(self, word, dicts=Dict()):
+    def __init__(self, word, dicts):
         self.dicts = dicts
         self.word = word
 
     def getRoot(self):
-        return Root(self.dicts.get_root(self.word), dicts = self.dicts)
+        return Root(self.dicts.get_root(self.word), self.dicts)
 
     def getType(self):
         return self.getRoot().getType()
@@ -15,7 +15,7 @@ class Word:
     def getNorma(self):
         norma = self.word
         if self.word in self.dicts.analogs:
-            norma = self.dicts.analogs[self.word]
+            norma = self.dicts.getAnalogs(self.word)
         return Word(norma)
 
     def getRootSynonyms(self):
@@ -36,12 +36,12 @@ class Word:
         return str(self.word)
 
 class Root:
-    def __init__(self, root, dicts=Dict()):
+    def __init__(self, root, dicts):
         self.dicts = dicts
         self.root = root
 
     def getType(self):
-        return Type(self.dicts.get_type(self.root), dicts = self.dicts)
+        return Type(self.dicts.get_type(self.root), self.dicts)
 
     def getWords(self):
         return set(map(lambda w: Word(w, self.dicts), self.dicts.get_words(self.root)))
@@ -58,7 +58,7 @@ class Root:
         return str(self.root)
 
 class Type:
-    def __init__(self, type, dicts=Dict()):
+    def __init__(self, type, dicts):
         self.type = type
         self.dicts = dicts
 
@@ -73,4 +73,12 @@ class Type:
         return words
 
     def __repr__(self):
-        return str(self.type)
+        return self.type
+
+    def __eq__(self, other):
+        if isinstance(other, str):
+            return self.type == other
+        elif isinstance(other, self.__class__):
+            return self.type == other.type
+        else
+            return NotImplemented
