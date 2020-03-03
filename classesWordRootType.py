@@ -4,10 +4,9 @@ class Word:
     def __init__(self, word, dicts):
         self.dicts = dicts
         self.word = word
-        self.root = Root(self.dicts.get_root(self.word), self.dicts)
 
     def getRoot(self):
-        return self.root
+        return Root(self.dicts.get_root(self.word), self.dicts)
 
     def getType(self):
         return self.getRoot().getType()
@@ -39,10 +38,9 @@ class Root:
     def __init__(self, root, dicts):
         self.dicts = dicts
         self.root = root
-        self.type = Type(self.dicts.get_type(self.root), self.dicts)
 
     def getType(self):
-        self.type
+        return Type(self.dicts.get_type(self.root), self.dicts)
 
     def getWords(self):
         return set(map(lambda w: Word(w, self.dicts), self.dicts.get_words(self.root)))
