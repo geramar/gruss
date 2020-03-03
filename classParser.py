@@ -1,36 +1,33 @@
-from classesWordRootType import Word
+from classesWordRootType import Word, Type
 import re
-import copy
+
 
 class Parser:
     def __init__(self, data):
-        self.matrix = [[],[]]
-    def parse(self, data):
-        self.text = list(
+        self.elements = []
+        self.data = data
+    def parse(self):
+        self.elements = list(
             map(
                 lambda x: Word(x),
-                re.sub('[^a-zA-Zäüöß\s]', '', data).lower().split()
+                re.sub('[^a-zA-Zäüöß\s]', '', self.data).lower().split()
             )
         )
 
-        self.formul = list(
-            map(
-                lambda x: x.getType(), self.text
-            )
-        )
-        for word in self.text:
-            if word.type == 'H':
-                i = self.text.index(word)
-                if self.text[i + 1].type == 'S' or self.text[i + 1].type == 'R':
-                    self.text[i + 1] = str(self.text[i]) + ' ' + str(self.text[i + 1])
-                    self.text.pop(i)
-                    self.formul.pop(i)
-            if word.type == 'und':
-                i = self.text.index(word)
-                self.text.pop(i)
-                self.formul.pop(i)
-        self.matrix[0] = self.text
-        self.matrix[1] = self.formul
-        return self.matrix
+        for element in self.elements:
+            if str(element.getType()) == 'H':
+                i = self.elements.index(element)
+                if str(self.elements[i + 1].getType()) == 'S' or str(self.elements[i + 1].getType()) == 'R':
+                    self.elements[i + 1] = Word(str(self.elements[i]) + ' ' + str(self.elements[i + 1]))
+                    self.elements.pop(i)
+            if str(element.getType()) == 'und':
+                i = self.elements.index(element)
+                self.elements.pop(i)
+        return self.elements
     def __repr__(self):
-        return str(self.matrix)
+        return str(self.elements)
+
+inFile = open(str(input('Название файла: ')+ '.txt'), 'r', encoding = 'utf8').read()
+data = Parser(inFile)
+print(data.parse())
+print(list(map(lambda x: x.getType(), data.parse())))
