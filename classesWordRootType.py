@@ -74,38 +74,3 @@ class Type:
 
     def __repr__(self):
         return str(self.type)
-
-w = input()
-a = Word(w)
-print('1. ', a)
-b = a.getRoot()
-print('2. ', b)
-c = a.getType()
-print('3. ', c)
-print('4. ', b.getType())
-d = b.getWords()
-print('5. ', d)
-e = list(d)
-print('6. ', e)
-f = e[0]
-print('7. ', f)
-print('8. ', f.getRoot())
-print('9. ', f.getType())
-g = c.getRoots()
-print('10. ', g)
-h = c.getWords()
-print('11. ', h)
-i = list(g)
-j = i[0]
-print(j)
-print('12. ', j.getWords())
-print('13. ', j.getType())
-k = list(h)
-l = k[0]
-print(l)
-print('14. ', l.getRoot())
-print('15. ', l.getType())
-print('16. ', a.getRootSynonyms())
-print('17. ', a.getNorma())
-print('18. ', b.getTypeSynonyms())
-print('19. ', a.getFunctionalSynonyms())
