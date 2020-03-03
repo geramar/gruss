@@ -1,48 +1,105 @@
 from dict import Dict
 
+
 class Word:
-    def __init__(self, dicts, word):
+    def __init__(self, word, dicts=Dict()):
         self.dicts = dicts
         self.word = word
+
     def getRoot(self):
-        return Root(self.dicts, self.dicts.get_root(self.word))
+        return Root(self.dicts.get_root(self.word), dicts = self.dicts)
+
     def getType(self):
         return self.getRoot().getType()
-    def getSynonyms():
-        words = self.getRoot().getWords()
-        #... exclude word
-        return words
-    def getOtherSynonyms():
-        ret = []
-        for root in self.getRoot.getSynonyms():
-            ret+= root.getWords()
-        return ret 
+
+    def getNorma(self):
+        norma = self.word
+        if self.word in self.dicts.analogs:
+            norma = self.dicts.analogs[self.word]
+        return norma
+
+    def getRootSynonyms(self):
+        synonyms = self.getRoot().getWords()
+        for syn in synonyms:
+            if syn == self.getNorma():
+                synonyms.remove(syn)
+        return synonyms
+
+    def getFunctionalSynonyms(self):
+        syn = set()
+        for root in self.getRoot().getTypeSynonyms():
+            syn |= root.getWords()
+        return syn
+
     def __repr__(self):
         return str(self.word)
 
 class Root:
-    def __init__(self, dicts, root):
+    def __init__(self, root, dicts=Dict()):
         self.dicts = dicts
         self.root = root
+
     def getType(self):
-        return Type(self.dicts, dicts.get_type_from_root(self.root))
-    def getSynonyms():
-        roots = self.getType().getRoots()
-        #... exclude root
-        return roots
+        return Type(self.dicts.get_type(self.root), dicts = self.dicts)
+
     def getWords(self):
-        list(map(lambda w: Word(self, dicts, w), dicts.get_words_from_root(self.root)))
+        return set(map(lambda w: Word(w, self.dicts), self.dicts.get_words(self.root)))
+
+    def getTypeSynonyms(self):
+        synonyms = self.getType().getRoots()
+        synonyms.remove(self.root)
+        return synonyms
+
     def __repr__(self):
         return str(self.root)
 
 class Type:
-    def __init__(self, dicts, type):
-        dicts = Dict()
+    def __init__(self, type, dicts=Dict()):
         self.type = type
-        self.roots = dicts.rget_roots(self.type)
-        self.words = dicts.rget_words(self.type)
+        self.dicts = dicts
+
+    def getRoots(self):
+        return set(map(lambda r: Root(r, self.dicts), self.dicts.get_roots(self.type)))
+
+    def getWords(self):
+        words = set()
+        roots = self.getRoots()
+        for root in roots:
+            words |= root.getWords()
+        return words
+
     def __repr__(self):
         return str(self.type)
 
-w = Word('Meow...', root='M')
-r = w.getRoot()
+w = input()
+a = Word(w)
+print('1. ', a)
+b = a.getRoot()
+print('2. ', b)
+c = a.getType()
+print('3. ', c)
+print('4. ', b.getType())
+d = b.getWords()
+print('5. ', d)
+e = list(d)
+print('6. ', e)
+f = e[0]
+print('7. ', f)
+print('8. ', f.getRoot())
+print('9. ', f.getType())
+g = c.getRoots()
+print('10. ', g)
+h = c.getWords()
+print('11. ', h)
+i = list(g)
+j = i[0]
+print(j)
+print('12. ', j.getWords())
+print('13. ', j.getType())
+k = list(h)
+l = k[0]
+print(l)
+print('14. ', l.getRoot())
+print('15. ', l.getType())
+print('16. ', a.getRootSynonyms())
+print('17. ', a.getNorma())

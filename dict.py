@@ -70,27 +70,27 @@ class Dict:
         if word in self.analogs:
             word = self.analogs[word]
         if word in self.word_to_root:
-            self.root = self.word_to_root[word]
-            return self.root
+            root = self.word_to_root[word]
+            return root
 
     def get_type(self, root):
         if root in self.root_to_type:
-            self.type = self.root_to_type[root]
-            return self.type
+            type = self.root_to_type[root]
+            return type
 
     def get_roots(self, type):
-        self.roots = set()
+        roots = set()
         for root in self.root_to_type:
             if self.root_to_type[root] == type:
-                self.roots.add(root)
-        return self.roots
+                roots.add(root)
+        return roots
 
     def get_words(self, root):
-        self.words = set()
-        if root in self.root_to_set:
-            self.words = self.root_to_set[root]
-        return self.words
+        words = set()
+        for word in self.word_to_root:
+            if self.word_to_root[word] == root:
+                words.add(word)
+        return words
 
 dicts = Dict()
-#a = str(input())
-#print(dicts.get_root(a))
+
