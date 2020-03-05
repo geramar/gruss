@@ -4,6 +4,7 @@ class Formula:
     def __init__(self, words, dicts):
         self.words = words
         self.dicts = dicts
+        self.formula = list(map(lambda x: x.getType(), self.words))
         self.ordnung = list(
             map(
                 lambda x: Type(x, self.dicts),
@@ -11,31 +12,41 @@ class Formula:
             )
         )
 
-    def isValid(self):
+    def firstValid(self):
         value = False
-        if self.words[0].getType() == 'h':
-            i = 1
-            test = [1]
-            for type in list(map(lambda x: x.getType(), self.words[1:])):
-                for el in range(i, len(self.ordnung)):
-                    if type == 'i':
-                        i = el
-                        test.append(1)
-                        break
-                    if type == self.ordnung[el]:
-                        i = el
-                        test.append(1)
-                        break
-            if len(test) == len(self.words):
-                value = True
+        i = 0
+        beginning = self.formula.index('h')
+        test = [1]
+        for type in self.formula:
+            for el in range(i, len(self.ordnung)):
+                if type == 'i':
+                    i = el
+                    test.append(1)
+                    break
+                if type == self.ordnung[el]:
+                    i = el
+                    test.append(1)
+                    print(el, i, test)
+                    break
+        if len(test) == len(self.words[beginning:]):
+            value = True
         return value
 
-
+    def isValid(self):
+        if self.formula[0] == 'h':
+            return self.firstValid()
+        if self.formula[0] != 'h':
+            for word in self.words:
+                if word.getType() == 'h':
+                    return self.firstValid()
 
 
 
     def getSchema(self):
-        formula = list(map(lambda x: x.getType(), self.words))
-        return '-'.join(map(str, formula))
+        for element in self.formula:
+            if element == 'R':
+                i = self.formula.index(element)
+                self.formula[i] = str(self.formula[i]) + str(self.words[i].getRoot())[0].upper()
+        return '-'.join(map(str, self.formula))
     def __repr__(self):
         return str(self.words)
