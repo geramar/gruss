@@ -53,6 +53,15 @@ class Dict:
         self.analogs = {
             'wolgeborner' : 'wohlgeborner',
             'hochwolgeborner' : 'hochwohlgeborner',
+            'wolgebohrner' : 'wohlgeborner',
+            'hochwolgebohrner' : 'hochwohlgeborner',
+            'wohlgebohrner': 'wohlgeborner',
+            'hochwohlgebohrner': 'hochwohlgeborner',
+            'wolgebohrener': 'wohlgeborner',
+            'hochwolgebohrener': 'hochwohlgeborner',
+            'wohlgebohrener' : 'wohlgeborner',
+            'hochwohlgebohrener' : 'hochwohlgeborner',
+            'hochedelgebohrner' : 'hochedelgeborner',
             'hochgelahrter' : 'hochgelehrter',
             'hochgelährter' : 'hochgelehrter',
             'hochgelahrtester' : 'hochgelehrtester',
@@ -63,6 +72,8 @@ class Dict:
             'hochgelärtester': 'hochgelehrtester',
             'hochgelerter': 'hochgelehrter',
             'hochgelertester': 'hochgelehrtester',
+            'hochgeschätzer' : 'hochgeschätzter',
+            'hochgeschätzester': 'hochgeschätztester',
             'vatter' : 'vater',
             'insonders' : 'insonderst',
             'herr professor': 'professor',
@@ -101,3 +112,10 @@ class Dict:
             if self.word_to_root[word] == root:
                 words.add(word)
         return words
+
+    def get_norma(self, word):
+        self.word = word
+        norma = self.word
+        if self.word in self.analogs:
+            norma = self.analogs[word]
+        return norma

@@ -13,9 +13,7 @@ class Word:
         return self.getRoot().getType()
 
     def getNorma(self):
-        norma = self.word
-        if self.word in self.dicts.analogs:
-            norma = self.dicts.getNorma(self.word)
+        norma = self.dicts.get_norma(self.word)
         return Word(norma, self.dicts)
 
     def getRootSynonyms(self):
