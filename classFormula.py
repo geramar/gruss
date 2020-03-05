@@ -1,4 +1,4 @@
-from classesWordRootType import Type
+from classesWordRootType import Type, UnknownType
 
 class Formula:
     def __init__(self, words, dicts):
@@ -8,7 +8,7 @@ class Formula:
         self.ordnung = list(
             map(
                 lambda x: Type(x, self.dicts),
-                ['h', 'H', 's2', 's3', 'S', 'r4', 'r5', 'H', 'R']
+                ['h', 'H', 's2', 's3', 'S', 'r4', 'r5', 'H', 'R', 'R']
             )
         )
 
@@ -16,19 +16,27 @@ class Formula:
         value = False
         i = 0
         beginning = self.formula.index('h')
-        test = [1]
+        for type in self.formula[::-1]:
+            if not isinstance (type, UnknownType):
+                ending = self.formula.index(type)
+                break
+        test = 1
         for type in self.formula:
             for el in range(i, len(self.ordnung)):
-                if type == 'i':
-                    i = el
-                    test.append(1)
+                if type == 'i' or type == self.ordnung[el]:
+                    i = el + 1
+                    test += 1
                     break
-                if type == self.ordnung[el]:
-                    i = el
-                    test.append(1)
-                    break
-        if len(test) == len(self.words[beginning:]):
-            value = True
+
+        if test == len(self.formula[beginning:ending + 1]):
+            if beginning == 0 and ending == len(self.formula) - 1:
+                value = 'Totally correct'
+            elif beginning == 0:
+                value = 'Correct until ' + str(ending + 1) + 'th word'
+            elif ending == self.words[-1]:
+                value = 'Correct starting from ' + str(beginning + 1)
+            else:
+                value = 'Correct starting from ' + str(beginning + 1) + 'th word ' + 'ending at ' + str(ending + 1) + 'th word'
         return value
 
     def isValid(self):

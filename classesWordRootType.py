@@ -35,7 +35,7 @@ class Word:
         return syn
 
     def __repr__(self):
-        return str(self.word)
+        return self.word
 
 
 class Root:
@@ -59,7 +59,7 @@ class Root:
         return synonyms
 
     def __repr__(self):
-        return str(self.root)
+        return self.root
 
 
 class UnknownRoot(Root):
@@ -71,6 +71,9 @@ class UnknownRoot(Root):
 
     def getTypeSynonyms(self):
         return set()
+
+    def __repr__(self):
+        return 'None'
 
 
 class Type:
@@ -104,4 +107,4 @@ class UnknownType(Type):
     def getRoots(self):
         return set()
     def __repr__(self):
-        return 'None'
+        return '***'
