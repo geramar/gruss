@@ -26,7 +26,6 @@ class Formula:
                 if type == self.ordnung[el]:
                     i = el
                     test.append(1)
-                    print(el, i, test)
                     break
         if len(test) == len(self.words[beginning:]):
             value = True
@@ -39,8 +38,6 @@ class Formula:
             for word in self.words:
                 if word.getType() == 'h':
                     return self.firstValid()
-
-
 
     def getSchema(self):
         for element in self.formula:

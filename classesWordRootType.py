@@ -4,7 +4,11 @@ class Word:
     def __init__(self, word, dicts):
         self.dicts = dicts
         self.word = word
-        self.root = Root(self.dicts.get_root(self.word), self.dicts)
+        root = dicts.get_root(self.word)
+        if root:
+            self.root = Root(root, self.dicts)
+        else:
+            self.root = UnknownRoot(root, self.dicts)
 
     def getRoot(self):
         return self.root
@@ -33,6 +37,7 @@ class Word:
     def __repr__(self):
         return str(self.word)
 
+
 class Root:
     def __init__(self, root, dicts):
         self.dicts = dicts
@@ -55,6 +60,18 @@ class Root:
 
     def __repr__(self):
         return str(self.root)
+
+
+class UnknownRoot(Root):
+    def getType(self):
+        return UnknownType(None, self.dicts)
+
+    def getWords(self):
+        return set()
+
+    def getTypeSynonyms(self):
+        return set()
+
 
 class Type:
     def __init__(self, type, dicts):
@@ -81,3 +98,10 @@ class Type:
             return self.type == other.type
         else:
             return NotImplemented
+
+
+class UnknownType(Type):
+    def getRoots(self):
+        return set()
+    def __repr__(self):
+        return 'None'

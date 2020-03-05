@@ -47,7 +47,6 @@ class Dict:
             'freund' : 'R',
             'insond' : 'i',
             'und' : 'und',
-            'unknown' : 'unknown'
         }
 
         self.analogs = {
@@ -89,14 +88,14 @@ class Dict:
         if word in self.word_to_root:
             root = self.word_to_root[word]
         else:
-            root = 'unknown'
+            root = None
         return root
 
     def get_type(self, root):
         if root in self.root_to_type:
             type = self.root_to_type[root]
         else:
-            type = 'unknown'
+            type = None
         return type
 
     def get_roots(self, type):
