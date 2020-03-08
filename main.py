@@ -9,6 +9,7 @@ for i in range(1, 16):
     formula = parser.parse(inFile)
     print(i, inFile)
     print(i, formula.getSchema())
+    print(i, formula.formula)
     print(i, formula.isValid())
     print('\n')
 
