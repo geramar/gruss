@@ -1,4 +1,4 @@
-
+import re
 
 class Word:
     def __init__(self, word, dicts):
@@ -42,7 +42,17 @@ class Root:
     def __init__(self, root, dicts):
         self.dicts = dicts
         self.root = root
-        self.type = Type(self.dicts.get_type(self.root), self.dicts)
+        type = self.dicts.get_type(self.root)
+        if type:
+            if str(type).isupper():
+                self.type = Nomination(self.dicts.get_type(self.root), self.dicts)
+            elif re.match('\w\d', str(type)):
+                self.type = Epithet(self.dicts.get_type(self.root), self.dicts)
+            else:
+                self.type = Type(self.dicts.get_type(self.root), self.dicts)
+        else:
+            self.type = Type(self.dicts.get_type(self.root), self.dicts)
+
 
     def getType(self):
         return self.type
@@ -108,3 +118,15 @@ class UnknownType(Type):
         return set()
     def __repr__(self):
         return '***'
+
+
+class Nomination(Type):
+    def __repr__(self):
+        return self.type
+
+
+class Epithet(Type):
+    def get_nomination(self):
+        return Nomination(self.type[0].upper(), self.dicts)
+    def get_index(self):
+        return int(self.type[-1])

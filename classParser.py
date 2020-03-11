@@ -15,6 +15,12 @@ class Parser:
         )
 
         for element in elements:
+            if element == 'hoch':
+                i = elements.index(element)
+                if elements[i] == elements[-1]:
+                    continue
+               # elif
+
             if element.getType() == 'H':
                 i = elements.index(element)
                 if elements[i] == elements[-1]:

@@ -23,6 +23,9 @@ class Dict:
             'hochgeschätzter' : 'schätz',
             'hochgeschätztester': 'schätz',
             'professor' : 'Stelle',
+            'cammerherr' : 'Stelle',
+            'hofrath' : 'Stelle',
+            'bibliothecarius' : 'Stelle',
             'herr' : 'herr',
             'gönner' : 'gönner',
             'vater' : 'vater',
@@ -32,8 +35,8 @@ class Dict:
         }
 
         self.root_to_type = {
-            'wohlgeb' : 'h',
-            'edelgeb' : 'h',
+            'wohlgeb' : 'h1',
+            'edelgeb' : 'h1',
             'lehr' : 's2',
             'ehr' : 's3',
             'geneig' : 'r4',
@@ -46,7 +49,7 @@ class Dict:
             'vater' : 'R',
             'freund' : 'R',
             'insond' : 'i',
-            'und' : 'und',
+            'und' : 'und'
         }
 
         self.analogs = {
@@ -76,6 +79,9 @@ class Dict:
             'vatter' : 'vater',
             'insonders' : 'insonderst',
             'herr professor': 'professor',
+            'herr cammerherr': 'cammerherr',
+            'herr hofrath': 'hofrath',
+            'herr bibliothecarius': 'bibliothecarius',
             'herr vatter': 'vater',
             'herr gönner': 'gönner',
             'herr vater': 'vater',
