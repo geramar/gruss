@@ -34,6 +34,14 @@ class Word:
             syn |= root.getWords()
         return syn
 
+    def __eq__(self, other):
+        if isinstance(other, str):
+            return self.word == other
+        elif isinstance(other, self.__class__):
+            return self.word == other.word
+        else:
+            return NotImplemented
+
     def __repr__(self):
         return self.word
 
