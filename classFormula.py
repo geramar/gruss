@@ -8,7 +8,6 @@ class Formula:
         self.words = words
         self.dicts = dicts
         self.types = list(map(lambda x: x.get_type(), self.words))
-        self.schema = copy.deepcopy(self.types)
         self.ordnung = list(
             map(
                 lambda x: Type(x, self.dicts),
@@ -24,11 +23,12 @@ class Formula:
         return Validator(self.ordnung, self.types)
 
     def get_schema(self):
-        for element in self.schema:
+        schema = copy.deepcopy(self.types)
+        for element in schema:
             if element == 'R':
-                i = self.schema.index(element)
-                self.schema[i] = str(self.schema[i]) + str(self.words[i].get_root())[0].upper()
-        return '-'.join(map(str, self.schema))
+                i = schema.index(element)
+                schema[i] = str(schema[i]) + str(self.words[i].get_root())[0].upper()
+        return '-'.join(map(str, schema))
 
     def __repr__(self):
         return str(self.words)
