@@ -1,4 +1,4 @@
-from classesWordRootType import UnknownType
+from classesWordRootType import Type, UnknownType
 
 
 class Validator:
@@ -25,7 +25,7 @@ class Validator:
 
         i = 0
         test = 0
-        for type in self.formula:
+        for type in self.formula[beginning:]:
             for el in range(i, len(self.ordnung)):
                 if type == 'i' or type == self.ordnung[el]:
                     i = el + 1
@@ -41,4 +41,11 @@ class Validator:
             else:
                 value = 'Correct starting from ' + str(beginning + 1) + 'th word ' + 'ending at ' + str(
                     ending + 1) + 'th word'
+
+        if not value:
+            print(self.formula[beginning:ending + 1])
+            print(all(list(map(lambda x: not isinstance(x, UnknownType), self.formula[beginning:ending + 1]))))
+            if all(list(map(lambda x: not isinstance(x, UnknownType), self.formula[beginning:ending + 1]))):
+                print('AHAHA')
+
         return value
