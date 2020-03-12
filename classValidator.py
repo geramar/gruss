@@ -9,15 +9,17 @@ class Validator:
     def validate(self):
         value = False
         beginning = 0
-        for type in self.formula:
-            if type == 'h1':
+
+        for el in self.formula:
+            if el == 'h1':
                 beginning = self.formula.index('h1')
                 break
 
         i_end = len(self.formula)
-        for type in self.formula[::-1]:
+
+        for el in self.formula[::-1]:
             i_end -= 1
-            if not isinstance(type, UnknownType):
+            if not isinstance(el, UnknownType):
                  break
         ending = i_end
 

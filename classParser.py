@@ -1,4 +1,4 @@
-from classesWordRootType import Word, Type, Nomination, Epithet
+from classesWordRootType import Word, Epithet
 from classFormula import Formula
 import re
 
@@ -20,16 +20,16 @@ class Parser:
             i += 1
 
             if element == 'hoch' and elements[i] != elements[-1]:
-                if isinstance(elements[i + 1].getType(), Epithet):
+                if isinstance(elements[i + 1].get_type(), Epithet):
                     elements[i + 1] = Word(str('hoch' + str(elements[i + 1])), self.dicts)
                     elements.pop(i)
 
-            if element.getType() == 'H' and elements[i] != elements[-1]:
-                if elements[i + 1].getType() == 'S' or elements[i + 1].getType() == 'R':
+            if element.get_type() == 'H' and elements[i] != elements[-1]:
+                if elements[i + 1].get_type() == 'S' or elements[i + 1].get_type() == 'R':
                     elements[i + 1] = Word(str(elements[i]) + ' ' + str(elements[i + 1]), self.dicts)
                     elements.pop(i)
 
-            if element.getType() == 'und':
+            if element.get_type() == 'und':
                 i = elements.index(element)
                 elements.pop(i)
 

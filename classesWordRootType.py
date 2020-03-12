@@ -1,5 +1,6 @@
 import re
 
+
 class Word:
     def __init__(self, word, dicts):
         self.dicts = dicts
@@ -10,28 +11,28 @@ class Word:
         else:
             self.root = UnknownRoot(root, self.dicts)
 
-    def getRoot(self):
+    def get_root(self):
         return self.root
 
-    def getType(self):
-        return self.getRoot().getType()
+    def get_type(self):
+        return self.get_root().get_type()
 
-    def getNorma(self):
+    def get_norma(self):
         norma = self.dicts.get_norma(self.word)
         return Word(norma, self.dicts)
 
-    def getRootSynonyms(self):
-        allSynonyms = self.getRoot().getWords()
+    def get_root_synonyms(self):
+        all_synonyms = self.get_root().get_words()
         synonyms = set()
-        for el in allSynonyms:
-            if str(el) != str(self.getNorma()):
+        for el in all_synonyms:
+            if str(el) != str(self.get_norma()):
                 synonyms.add(el)
         return synonyms
 
-    def getFunctionalSynonyms(self):
+    def get_functional_synonyms(self):
         syn = set()
-        for root in self.getRoot().getTypeSynonyms():
-            syn |= root.getWords()
+        for root in self.get_root().get_type_synonyms():
+            syn |= root.get_words()
         return syn
 
     def __eq__(self, other):
@@ -61,17 +62,16 @@ class Root:
         else:
             self.type = Type(self.dicts.get_type(self.root), self.dicts)
 
-
-    def getType(self):
+    def get_type(self):
         return self.type
 
-    def getWords(self):
+    def get_words(self):
         return set(map(lambda w: Word(w, self.dicts), self.dicts.get_words(self.root)))
 
-    def getTypeSynonyms(self):
-        allSynonyms = self.getType().getRoots()
+    def get_type_synonyms(self):
+        all_synonyms = self.get_type().get_roots()
         synonyms = set()
-        for el in allSynonyms:
+        for el in all_synonyms:
             if str(el) != str(self):
                 synonyms.add(el)
         return synonyms
@@ -81,13 +81,13 @@ class Root:
 
 
 class UnknownRoot(Root):
-    def getType(self):
+    def get_type(self):
         return UnknownType(None, self.dicts)
 
-    def getWords(self):
+    def get_words(self):
         return set()
 
-    def getTypeSynonyms(self):
+    def get_type_synonyms(self):
         return set()
 
     def __repr__(self):
@@ -99,14 +99,14 @@ class Type:
         self.type = type
         self.dicts = dicts
 
-    def getRoots(self):
+    def get_roots(self):
         return set(map(lambda r: Root(r, self.dicts), self.dicts.get_roots(self.type)))
 
-    def getWords(self):
+    def get_words(self):
         words = set()
-        roots = self.getRoots()
+        roots = self.get_roots()
         for root in roots:
-            words |= root.getWords()
+            words |= root.get_words()
         return words
 
     def __repr__(self):
@@ -122,8 +122,9 @@ class Type:
 
 
 class UnknownType(Type):
-    def getRoots(self):
+    def get_roots(self):
         return set()
+
     def __repr__(self):
         return '***'
 
@@ -136,5 +137,6 @@ class Nomination(Type):
 class Epithet(Type):
     def get_nomination(self):
         return Nomination(self.type[0].upper(), self.dicts)
+
     def get_index(self):
         return int(self.type[-1])

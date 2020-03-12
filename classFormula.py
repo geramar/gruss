@@ -7,7 +7,7 @@ class Formula:
     def __init__(self, words, dicts):
         self.words = words
         self.dicts = dicts
-        self.formula = list(map(lambda x: x.getType(), self.words))
+        self.formula = list(map(lambda x: x.get_type(), self.words))
         self.schema = copy.deepcopy(self.formula)
         self.ordnung = list(
             map(
@@ -16,15 +16,15 @@ class Formula:
             )
         )
 
-    def isValid(self):
+    def is_valid(self):
         validation = Validator(self.ordnung, self.formula)
         return validation.validate()
 
-    def getSchema(self):
+    def get_schema(self):
         for element in self.schema:
             if element == 'R':
                 i = self.schema.index(element)
-                self.schema[i] = str(self.schema[i]) + str(self.words[i].getRoot())[0].upper()
+                self.schema[i] = str(self.schema[i]) + str(self.words[i].get_root())[0].upper()
         return '-'.join(map(str, self.schema))
 
     def __repr__(self):
