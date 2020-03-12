@@ -1,4 +1,5 @@
 from classesWordRootType import Type, UnknownType
+from classValue import Value
 
 
 class Validator:
@@ -7,7 +8,7 @@ class Validator:
         self.formula = formula
 
     def validate(self):
-        value = False
+        value = 0
         beginning = 0
 
         for el in self.formula:
@@ -33,19 +34,15 @@ class Validator:
                     break
         if test == len(self.formula[beginning:ending]):
             if beginning == 0 and ending == len(self.formula) - 1:
-                value = 'Totally correct'
+                value = 1
             elif beginning == 0:
-                value = 'Correct until ' + str(ending + 1) + 'th word'
+                value = (1, 0)
             elif ending == self.formula[-1]:
-                value = 'Correct starting from ' + str(beginning + 1)
+                value = (0, 1)
             else:
-                value = 'Correct starting from ' + str(beginning + 1) + 'th word ' + 'ending at ' + str(
-                    ending + 1) + 'th word'
+                value = (0, 0)
 
-        if not value:
-            print(self.formula[beginning:ending + 1])
-            print(all(list(map(lambda x: not isinstance(x, UnknownType), self.formula[beginning:ending + 1]))))
-            if all(list(map(lambda x: not isinstance(x, UnknownType), self.formula[beginning:ending + 1]))):
-                print('AHAHA')
+        if not value and all(list(map(lambda x: not isinstance(x, UnknownType), self.formula[beginning:ending + 1]))):
+                value = -1
 
-        return value
+        return Value(value, beginning, ending)
