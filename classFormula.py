@@ -20,6 +20,9 @@ class Formula:
         validation = Validator(self.ordnung, self.formula)
         return validation.validate()
 
+    def get_value(self):
+        return Validator(self.ordnung, self.formula)
+
     def get_schema(self):
         for element in self.schema:
             if element == 'R':

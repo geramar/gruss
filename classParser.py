@@ -34,3 +34,4 @@ class Parser:
                 elements.pop(i)
 
         return Formula(elements, self.dicts)
+
