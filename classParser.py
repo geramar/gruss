@@ -1,5 +1,7 @@
 from classesWordRootType import Word, Epithet
 from classFormula import Formula
+from classIllinealFormula import IllinealFormula
+from classLinealFormula import LinealFormula
 import re
 
 
@@ -33,5 +35,9 @@ class Parser:
                 i = elements.index(element)
                 elements.pop(i)
 
-        return Formula(elements, self.dicts)
+        formula = Formula(elements, self.dicts)
+        if formula.is_valid() != -1:
+            return IllinealFormula(elements, self.dicts)
+        elif formula.is_valid() != 0:
+            return LinealFormula(elements, self.dicts)
 
