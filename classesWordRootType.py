@@ -5,7 +5,7 @@ class Word:
     def __init__(self, word, dicts):
         self.dicts = dicts
         self.word = word
-        root = dicts.get_root(self.word)
+        root = self.dicts.get_root(self.word)
         if root:
             self.root = Root(root, self.dicts)
         else:
@@ -51,7 +51,7 @@ class Root:
     def __init__(self, root, dicts):
         self.dicts = dicts
         self.root = root
-        type = self.dicts.get_type(self.root)
+        type = self.dicts.get_type(root)
         if type:
             if str(type).isupper():
                 self.type = Nomination(self.dicts.get_type(self.root), self.dicts)
@@ -60,7 +60,7 @@ class Root:
             else:
                 self.type = Type(self.dicts.get_type(self.root), self.dicts)
         else:
-            self.type = Type(self.dicts.get_type(self.root), self.dicts)
+            self.type = UnknownType(self.dicts.get_type(self.root), self.dicts)
 
     def get_type(self):
         return self.type
@@ -120,6 +120,9 @@ class Type:
         else:
             return NotImplemented
 
+    def get_correlation(self):
+        return 'None'
+
 
 class UnknownType(Type):
     def get_roots(self):
@@ -133,9 +136,17 @@ class Nomination(Type):
     def __repr__(self):
         return self.type
 
+    def get_correlation(self):
+        epithets = set()
+        for element in self.dicts.root_to_type:
+            if self.dicts.root_to_type[element][0] == self.type.lower():
+                epithets.add(self.dicts.root_to_type[element])
+        epithets = list(map(lambda x: Type(x, self.dicts), epithets))
+        return epithets
+
 
 class Epithet(Type):
-    def get_nomination(self):
+    def get_correlation(self):
         return Nomination(self.type[0].upper(), self.dicts)
 
     def get_index(self):
